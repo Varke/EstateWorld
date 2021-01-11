@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "10617337946",
+    "project_id": "estateworlddobrikov",
+    "storage_bucket": "estateworlddobrikov.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10617337946:android:78783bafec4d41f97e8063",
+        "android_client_info": {
+          "package_name": "com.dobrikov.estateworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10617337946-3973s7q3khk02sv1n9cmnvo620pni703.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dobrikov.estateworld",
+            "certificate_hash": "1c9f74df5a89be71da58f2e8d6a05c836d05e408"
+          }
+        },
+        {
+          "client_id": "10617337946-k7sia45fl25038gdr95iijoqeb7aaffh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrTlObMjUkI_D76zBYona3MiJVtFgPra0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10617337946-k7sia45fl25038gdr95iijoqeb7aaffh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
