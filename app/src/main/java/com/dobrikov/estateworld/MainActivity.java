@@ -161,15 +161,15 @@ public class MainActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         Snackbar.make(root, "Успешная регистрация!", Snackbar.LENGTH_LONG).show();
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Snackbar.make(root, "Ошибка регистрации. " + e.getMessage(), Snackbar.LENGTH_LONG).show();
-                                    }
                                 });
 
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Snackbar.make(root, "Ошибка регистрации. " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 
