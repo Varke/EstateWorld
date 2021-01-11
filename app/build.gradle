@@ -38,8 +38,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
 
-    implementation 'com.google.firebase:firebase-auth:26.2.0'
-    implementation 'com.google.firebase:firebase-database:26.2.0'
+   // implementation 'com.google.firebase:firebase-auth:26.2.0'
+   // implementation 'com.google.firebase:firebase-database:26.2.0'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.+'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'

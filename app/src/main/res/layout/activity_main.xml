@@ -2,10 +2,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/EstateWorldWelcomeScreen"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/estateworldwelcomescreen"
     tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/mainfontmontserrat"
+        android:text="@string/author"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_above="@id/author"
+        android:layout_marginBottom="40dp">
+
+        <Button
+            android:id="@+id/button_signup"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_animation"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:text="@string/signup"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_signin"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:text="@string/signin" />
+
+    </LinearLayout>
+
 
 
 
