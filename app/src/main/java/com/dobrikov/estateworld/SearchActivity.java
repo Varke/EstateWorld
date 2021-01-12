@@ -13,22 +13,37 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dobrikov.estateworld.Models.Apartment;
+import com.dobrikov.estateworld.Models.BoxAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.valueOf;
 
 public class SearchActivity extends AppCompatActivity {
-
+    ArrayList<Apartment> products = new ArrayList<Apartment>();
+    BoxAdapter boxAdapter;
 
     RelativeLayout root;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        // создаем адаптер
+        fillData();
+        boxAdapter = new BoxAdapter(this, products);
+
+        // настраиваем список
+        ListView lvMain = (ListView) findViewById(R.id.list_houses);
+        lvMain.setAdapter(boxAdapter);
+
+    // String street, String district, String city, String title, String ownerEmail, int countRooms, int size, int cost, int level, int typeHouse, int imgid, int id
+    // генерируем данные для адаптера
+
 
         root = findViewById(R.id.root_searchactivity);
         Button btnFind = findViewById(R.id.findButton);
@@ -40,7 +55,16 @@ public class SearchActivity extends AppCompatActivity {
         });
 
     }
-
+    void fillData() {
+        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 25, 1100000, 5, 1, 0, 0));
+        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 25, 1100000, 5, 1, 0, 0));
+        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 25, 1100000, 5, 1, 0, 0));
+        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 25, 1100000, 5, 1, 0, 0));
+    }
     private void showFindHousesWindow() {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setTitle("Давайте найдём вам квартиру!");
