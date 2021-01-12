@@ -64,11 +64,11 @@ public class SearchActivity extends AppCompatActivity {
         products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
                 , 1, 31, 1100000, 5, 1, 0, 0));
         products.add(new Apartment("Панина", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 1, 0, 0));
+                , 1, 31, 1100000, 5, 0, 0, 0));
         products.add(new Apartment("Союзная", "Ленинский", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
                 , 1, 31, 1100000, 5, 1, 0, 0));
         products.add(new Apartment("Труфанова", "Брагино", "Москва", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 1, 0, 0));
+                , 1, 31, 1100000, 5, 0, 0, 0));
     }
     private void showFindHousesWindow() {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -100,9 +100,9 @@ public class SearchActivity extends AppCompatActivity {
                                  _levelSeekBar.getSelectedMaxValue().intValue(),
                                  _costSeekBar.getSelectedMinValue().intValue(),
                                  _costSeekBar.getSelectedMaxValue().intValue(),
-                                 _brick.isSelected(),
-                                 _panel.isSelected());
-                    Snackbar.make(root, "ДОБАВЛЕНО ЭЛЕМЕНТОВ ", Snackbar.LENGTH_SHORT).show();
+                                 _brick.isChecked(),
+                                 _panel.isChecked());
+                    Snackbar.make(root, "Фильтры применены.", Snackbar.LENGTH_SHORT).show();
                     ListView lvMain = (ListView) findViewById(R.id.list_houses);
                     lvMain.setAdapter(new BoxAdapter(SearchActivity.this, test));
                 }
@@ -114,8 +114,18 @@ public class SearchActivity extends AppCompatActivity {
             , int countMinSize, int countMaxSize, int minLevel, int maxLevel, int minCost, int maxCost, boolean brick, boolean panel) {
         boolean street = false, district = false, city = false;
         String streetStr ="", districtStr = "", cityStr = "";
+        int _needType = 2;
+        if (brick && !panel)
+            _needType = 1;
+        if (panel && !brick)
+            _needType = 0;
+        if (brick && panel)
+            _needType = 2;
+
 
         String addressArray[] = address.split(", ");
+
+
 
         for (int i = 0; i < addressArray.length; i++)
             for (int j = 0; j < addressContainer.getStreets().length; j++)
@@ -145,7 +155,8 @@ public class SearchActivity extends AppCompatActivity {
                         products.get(i).getLevel() >= minLevel &&
                         products.get(i).getLevel() <= maxLevel &&
                         products.get(i).getCost() >= minCost &&
-                        products.get(i).getCost() <= maxCost)
+                        products.get(i).getCost() <= maxCost &&
+                            (products.get(i).getTypeHouse() == _needType && _needType != 2 || _needType == 2 ))
                     {
                         productsWithFilter.add(products.get(i));
                     }
