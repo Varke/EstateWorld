@@ -5,7 +5,7 @@
     app:cardElevation="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
     <LinearLayout
@@ -20,24 +20,26 @@
             android:id="@+id/streetField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/mainfontmontserrat"
             android:hint="Улица, район, город"
             android:inputType="text"
             android:text=""
-            android:textSize="20sp"
-            android:layout_marginBottom="30dp"
 
+            android:textSize="20sp"
             app:met_baseColor="@color/white"
             app:met_errorColor="#ddaa00"
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/mainYellowColor">
 
         </com.rengwuxian.materialedittext.MaterialEditText>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
             android:text="Количество комнат"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="20sp"></TextView>
         <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
             android:id="@+id/roomSeekbar"
             android:layout_width="fill_parent"
@@ -45,12 +47,13 @@
             app:absoluteMaxValue="0"
             app:absoluteMinValue="100"
             android:layout_marginBottom="30dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
             android:text="Метраж квартиры"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="20sp"></TextView>
         <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
             android:id="@+id/meterSeekbar"
             android:layout_width="fill_parent"
@@ -58,12 +61,13 @@
             app:absoluteMaxValue="30"
             app:absoluteMinValue="160"
             android:layout_marginBottom="30dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
             android:text="Этаж квартиры"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="20sp"></TextView>
         <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
             android:id="@+id/levelSeekbar"
             android:layout_width="fill_parent"
@@ -71,12 +75,13 @@
             app:absoluteMaxValue="1"
             app:absoluteMinValue="9"
             android:layout_marginBottom="30dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
             android:text="Стоимость"
-            android:textSize="20sp">
-        </TextView>
+            android:textSize="20sp"></TextView>
         <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
             android:id="@+id/costSeekbar"
             android:layout_width="fill_parent"
@@ -90,15 +95,18 @@
             android:id="@+id/brickCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
             android:text="Кирпичный дом"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
+
         <CheckBox
             android:id="@+id/panelCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:fontFamily="@font/mainfontmontserrat"
             android:text="Панельный дом"
-            android:textSize="20sp"
-            android:layout_marginBottom="50dp"/>
+            android:textSize="20sp" />
 
 
 

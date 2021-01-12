@@ -22,6 +22,16 @@
             android:text="@string/find_house"
             android:textColor="@color/black" />
 
+        <TextView
+            android:id="@+id/filters_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:text=""
+            android:textSize="0sp"
+            android:textStyle="bold|italic">
+
+        </TextView>
         <ListView
             android:id="@+id/list_houses"
             android:layout_width="match_parent"

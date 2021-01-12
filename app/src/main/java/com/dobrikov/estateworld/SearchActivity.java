@@ -1,3 +1,4 @@
+
 package com.dobrikov.estateworld;
 
 import androidx.appcompat.app.AlertDialog;
@@ -8,10 +9,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dobrikov.estateworld.Models.AddressContainer;
 import com.dobrikov.estateworld.Models.Apartment;
 import com.dobrikov.estateworld.Models.BoxAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,6 +30,7 @@ import static java.lang.String.valueOf;
 public class SearchActivity extends AppCompatActivity {
     ArrayList<Apartment> products = new ArrayList<Apartment>();
     BoxAdapter boxAdapter;
+    AddressContainer addressContainer = new AddressContainer();
 
     RelativeLayout root;
     @Override
@@ -57,13 +62,13 @@ public class SearchActivity extends AppCompatActivity {
     }
     void fillData() {
         products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 25, 1100000, 5, 1, 0, 0));
-        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 25, 1100000, 5, 1, 0, 0));
-        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 25, 1100000, 5, 1, 0, 0));
-        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 25, 1100000, 5, 1, 0, 0));
+                , 1, 31, 1100000, 5, 1, 0, 0));
+        products.add(new Apartment("Панина", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 31, 1100000, 5, 1, 0, 0));
+        products.add(new Apartment("Союзная", "Ленинский", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 31, 1100000, 5, 1, 0, 0));
+        products.add(new Apartment("Труфанова", "Брагино", "Москва", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
+                , 1, 31, 1100000, 5, 1, 0, 0));
     }
     private void showFindHousesWindow() {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -73,14 +78,96 @@ public class SearchActivity extends AppCompatActivity {
             LayoutInflater inflater = LayoutInflater.from(this);
             View find_houses_window = inflater.inflate(R.layout.find_houses, null);
             dialog.setView(find_houses_window);
-            RangeSeekBar rsb = (RangeSeekBar)find_houses_window.findViewById(R.id.roomSeekbar);
+            RangeSeekBar _roomSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.roomSeekbar);
+            RangeSeekBar _meterSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.meterSeekbar);
+            RangeSeekBar _levelSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.levelSeekbar);
+            RangeSeekBar _costSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.costSeekbar);
+            CheckBox _brick = (CheckBox) find_houses_window.findViewById(R.id.brickCheckBox);
+            CheckBox _panel = (CheckBox) find_houses_window.findViewById(R.id.panelCheckBox);
+            TextView textFromStreetField = find_houses_window.findViewById(R.id.streetField);
 
             dialog.setPositiveButton("Найти квартиру", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Snackbar.make(root, "ВЫ ВВЕЛИ ОТ " + rsb.getSelectedMinValue().toString() + " DO " + rsb.getSelectedMaxValue().toString(), Snackbar.LENGTH_SHORT).show();
+
+
+                    ArrayList<Apartment> test = applyFilters(textFromStreetField.getText().toString(),
+                                 _roomSeekBar.getSelectedMinValue().intValue(),
+                                 _roomSeekBar.getSelectedMaxValue().intValue(),
+                                 _meterSeekBar.getSelectedMinValue().intValue(),
+                                 _meterSeekBar.getSelectedMaxValue().intValue(),
+                                 _levelSeekBar.getSelectedMinValue().intValue(),
+                                 _levelSeekBar.getSelectedMaxValue().intValue(),
+                                 _costSeekBar.getSelectedMinValue().intValue(),
+                                 _costSeekBar.getSelectedMaxValue().intValue(),
+                                 _brick.isSelected(),
+                                 _panel.isSelected());
+                    Snackbar.make(root, "ДОБАВЛЕНО ЭЛЕМЕНТОВ ", Snackbar.LENGTH_SHORT).show();
+                    ListView lvMain = (ListView) findViewById(R.id.list_houses);
+                    lvMain.setAdapter(new BoxAdapter(SearchActivity.this, test));
                 }
             });
             dialog.show();
+    }
+
+    private ArrayList<Apartment> applyFilters(String address, int countMinRooms, int countMaxRooms
+            , int countMinSize, int countMaxSize, int minLevel, int maxLevel, int minCost, int maxCost, boolean brick, boolean panel) {
+        boolean street = false, district = false, city = false;
+        String streetStr ="", districtStr = "", cityStr = "";
+
+        String addressArray[] = address.split(", ");
+
+        for (int i = 0; i < addressArray.length; i++)
+            for (int j = 0; j < addressContainer.getStreets().length; j++)
+                if (addressArray[i].equalsIgnoreCase(addressContainer.getStreets()[j])) {
+                    street = true;
+                    streetStr = addressArray[i];
+                }
+        for (int i = 0; i < addressArray.length; i++)
+            for (int j = 0; j < addressContainer.getDistricts().length; j++)
+                if (addressArray[i].equalsIgnoreCase(addressContainer.getDistricts()[j])) {
+                    district = true;
+                    districtStr = addressArray[i];
+                }
+        for (int i = 0; i < addressArray.length; i++)
+            for (int j = 0; j < addressContainer.getCity().length; j++)
+                if (addressArray[i].equalsIgnoreCase(addressContainer.getCity()[j])) {
+                    city = true;
+                    cityStr = addressArray[i];
+                }
+        ArrayList<Apartment> productsWithFilter = new ArrayList<Apartment>();
+                for (int i = 0; i < products.size(); i++)
+                {
+                    if (products.get(i).getCountRooms() >= countMinRooms &&
+                        products.get(i).getCountRooms() <= countMaxRooms &&
+                        products.get(i).getSize() >= countMinSize &&
+                        products.get(i).getSize() <= countMaxSize &&
+                        products.get(i).getLevel() >= minLevel &&
+                        products.get(i).getLevel() <= maxLevel &&
+                        products.get(i).getCost() >= minCost &&
+                        products.get(i).getCost() <= maxCost)
+                    {
+                        productsWithFilter.add(products.get(i));
+                    }
+
+                }
+                ArrayList<Integer> tempint = new ArrayList<Integer>();
+                for (int i = productsWithFilter.size()-1; i >= 0; i--) {
+                    if (streetStr.equals("")){
+                        if (districtStr.equals("")) {
+                            if (cityStr.equals("")) {
+                                return productsWithFilter;
+                            }
+                            else if (!(productsWithFilter.get(i).getCity().equalsIgnoreCase(cityStr)))
+                                productsWithFilter.remove(i);
+                        }
+                        else if (!(productsWithFilter.get(i).getDistrict().equalsIgnoreCase(districtStr))||(city == true && productsWithFilter.get(i).getCity().equalsIgnoreCase(cityStr) == false))
+                            productsWithFilter.remove(i);
+                    }
+                    else if (!(productsWithFilter.get(i).getStreet().equalsIgnoreCase(streetStr))||(district == true && productsWithFilter.get(i).getDistrict().equalsIgnoreCase(districtStr) == false)||(city == true && productsWithFilter.get(i).getCity().equalsIgnoreCase(cityStr) == false))
+                        productsWithFilter.remove(i);
+                }
+
+                return productsWithFilter;
     }
 }

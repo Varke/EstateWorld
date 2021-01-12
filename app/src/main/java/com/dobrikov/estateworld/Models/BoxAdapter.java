@@ -60,7 +60,7 @@ public class BoxAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.apartmentTitle)).setText(p.getTitle());
         ((TextView) view.findViewById(R.id.apartmentCost)).setText(p.getCost() + "₽");
         ((TextView) view.findViewById(R.id.apartmentCountRoomsAndMeters)).setText(p.getRoomsString() + ", " + p.getSize() + "кв.м.");
-        ((TextView) view.findViewById(R.id.apartmentDescription)).setText(p.getCity() + ", " + p.getDistrict() + ", " + p.getStreet());
+        ((TextView) view.findViewById(R.id.apartmentDescription)).setText("г." + p.getCity() + ", р-н." + p.getDistrict() + ", ул." + p.getStreet());
         ((ImageView) view.findViewById(R.id.apartmentImage)).setImageResource(p.getImage());
 
         return view;
