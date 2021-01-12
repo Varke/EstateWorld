@@ -14,4 +14,9 @@
         <!-- Customize your theme here. -->
         <item name="android:windowFullscreen">true</item>
     </style>
+    <declare-styleable name="RangeSeekBar">
+        <attr name="absoluteMinValue" format="integer|float"/>
+        <attr name="absoluteMaxValue" format="integer|float"/>
+        <attr name="singleThumb" format="boolean"/>
+    </declare-styleable>
 </resources>

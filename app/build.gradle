@@ -39,6 +39,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
 
+    implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0' // Double Seekbar
     implementation 'com.google.firebase:firebase-auth:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     //noinspection GradleCompatible
