@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -31,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<Apartment> products = new ArrayList<Apartment>();
     BoxAdapter boxAdapter;
     AddressContainer addressContainer = new AddressContainer();
-
+    String textToTextViewFilter = "Фильтры поиска: ";
     RelativeLayout root;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,17 +102,42 @@ public class SearchActivity extends AppCompatActivity {
                                  _costSeekBar.getSelectedMinValue().intValue(),
                                  _costSeekBar.getSelectedMaxValue().intValue(),
                                  _brick.isChecked(),
-                                 _panel.isChecked());
+                                 _panel.isChecked(), find_houses_window);
                     Snackbar.make(root, "Фильтры применены.", Snackbar.LENGTH_SHORT).show();
                     ListView lvMain = (ListView) findViewById(R.id.list_houses);
+                    TextView tv = (TextView)findViewById(R.id.filters_text);
+                    tv.setText(textToTextViewFilter);
+                    tv.setTextSize(15);
+
                     lvMain.setAdapter(new BoxAdapter(SearchActivity.this, test));
+                    lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> parent, View view,
+                                                int position, long id) {
+
+                        }
+                    });
                 }
             });
             dialog.show();
     }
 
     private ArrayList<Apartment> applyFilters(String address, int countMinRooms, int countMaxRooms
-            , int countMinSize, int countMaxSize, int minLevel, int maxLevel, int minCost, int maxCost, boolean brick, boolean panel) {
+            , int countMinSize, int countMaxSize, int minLevel, int maxLevel, int minCost, int maxCost, boolean brick, boolean panel, View find_houses_window) {
+
+
+        RangeSeekBar _roomSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.roomSeekbar);
+        RangeSeekBar _meterSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.meterSeekbar);
+        RangeSeekBar _levelSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.levelSeekbar);
+        RangeSeekBar _costSeekBar = (RangeSeekBar)find_houses_window.findViewById(R.id.costSeekbar);
+        CheckBox _brick = (CheckBox) find_houses_window.findViewById(R.id.brickCheckBox);
+        CheckBox _panel = (CheckBox) find_houses_window.findViewById(R.id.panelCheckBox);
+        TextView textFromStreetField = find_houses_window.findViewById(R.id.streetField);
+
+
+
+
+
+
         boolean street = false, district = false, city = false;
         String streetStr ="", districtStr = "", cityStr = "";
         int _needType = 2;
@@ -121,6 +147,7 @@ public class SearchActivity extends AppCompatActivity {
             _needType = 0;
         if (brick && panel)
             _needType = 2;
+
 
 
         String addressArray[] = address.split(", ");
@@ -179,6 +206,25 @@ public class SearchActivity extends AppCompatActivity {
                         productsWithFilter.remove(i);
                 }
 
+        if (city)
+            textToTextViewFilter = textToTextViewFilter.concat("г." + cityStr.toUpperCase() +", ");
+        if (district)
+            textToTextViewFilter = textToTextViewFilter.concat("р-н." + districtStr.toUpperCase() +", ");
+        if (street)
+            textToTextViewFilter = textToTextViewFilter.concat("ул." + streetStr.toUpperCase() +", ");
+        textToTextViewFilter = textToTextViewFilter.concat("КОМНАТЫ [" + valueOf(countMinRooms) + " — " + valueOf(countMaxRooms) + "], ");
+        textToTextViewFilter = textToTextViewFilter.concat("МЕТРАЖ [" + valueOf(countMinSize) + " — " + valueOf(countMaxSize) + "кв.м.], ");
+        textToTextViewFilter = textToTextViewFilter.concat("ЭТАЖ [" + valueOf(minLevel) + " — " + valueOf(maxLevel) + "], ");
+        if (_costSeekBar.getAbsoluteMinValue().intValue() != minCost || _costSeekBar.getAbsoluteMaxValue().intValue() != maxCost)
+            textToTextViewFilter = textToTextViewFilter.concat("ЦЕНА [" + valueOf(minCost) + " — " + valueOf(maxCost) + "], ");
+        else textToTextViewFilter = textToTextViewFilter.concat("ЦЕНА [ЛЮБАЯ], ");
+        if (_needType == 0)
+            textToTextViewFilter = textToTextViewFilter.concat("ДОМ [ПАНЕЛЬНЫЙ].");
+        if (_needType == 1)
+            textToTextViewFilter = textToTextViewFilter.concat("ДОМ [КИРПИЧНЫЙ].");
+        if (_needType == 2)
+            textToTextViewFilter = textToTextViewFilter.concat("ДОМ [ПАНЕЛЬНЫЙ, КИРПИЧНЫЙ].");
+        textToTextViewFilter = textToTextViewFilter.concat("\nВАРИАНТОВ НАЙДЕНО: " + productsWithFilter.size());
                 return productsWithFilter;
     }
 }

@@ -28,8 +28,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/mainfontmontserrat"
             android:text=""
+            android:textColor="@color/mainYellowColor"
             android:textSize="0sp"
-            android:textStyle="bold|italic">
+            android:textStyle="bold">
 
         </TextView>
         <ListView
