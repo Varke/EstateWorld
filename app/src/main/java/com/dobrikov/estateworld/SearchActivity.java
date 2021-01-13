@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -124,9 +126,17 @@ public class SearchActivity extends AppCompatActivity {
     }
     void fillData() {
         AddressContainer ac = new AddressContainer();
-        String str = ac.getCity()[0 + (int)(Math.random() * 4)];
-        for (int i = 0; i < 10; i++)
-            products.add(new Apartment(ac.getStreets()[0 + (int)(Math.random() * 12)],
+        SQLiteDatabase apartmentsDataBase = getBaseContext().openOrCreateDatabase("apartmentsDataBase.db", MODE_PRIVATE, null);
+        apartmentsDataBase.execSQL("CREATE TABLE IF NOT EXISTS apartments (street TEXT, district TEXT, city TEXT, title TEXT, ownerNumber INTEGER, countRooms INTEGER," +
+                " size INTEGER, cost INTEGER, level INTEGER, typeHouse INTEGER, imgid INTEGER, id INTEGER)");
+
+
+       /* for (int i = 0; i < 10; i++)
+            apartmentsDataBase.execSQL("INSERT INTO apartments VALUES ('" + ac.getStreets()[0 + (int)(Math.random() * 12)] +"', '"+ ac.getDistricts()[0 + (int)(Math.random() * 5)] + "', '" + ac.getCity()[0 + (int)(Math.random() * 4)] + "', '" + ac.getTitles()[0 + (int)(Math.random() * 9)] + "', '"
+                    + valueOf(890000000 + (int)(Math.random()*819999999)) + "', '" + (1 + (int)(Math.random() * 5)) + "', '"
+                    + (30 + (int)(Math.random() * 160)) + "', '" + (600000 + (int)(Math.random() * 10000000)) + "', '" + (1 + (int)(Math.random() * 9)) + "', '" + (0 + (int)(Math.random() * 1)) + "', '" + (0 + (int)(Math.random() * 15)) +"', '" + i + "');");
+*/
+           /* products.add(new Apartment(ac.getStreets()[0 + (int)(Math.random() * 12)],
                     ac.getDistricts()[0 + (int)(Math.random() * 5)],
                     ac.getCity()[0 + (int)(Math.random() * 4)],
                     ac.getTitles()[0 + (int)(Math.random() * 9)],
@@ -137,7 +147,27 @@ public class SearchActivity extends AppCompatActivity {
                     1 + (int)(Math.random() * 9),
                     0 + (int)(Math.random() * 1),
                     0 + (int)(Math.random() * 15),
-                    i));
+                    i)); */
+
+        Cursor query = apartmentsDataBase.rawQuery("SELECT * FROM apartments;", null);
+        if(query.moveToFirst()){
+            while(query.moveToNext()) {
+                products.add(new Apartment(query.getString(0),
+                        query.getString(1),
+                        query.getString(2),
+                        query.getString(3),
+                        query.getString(4),
+                        query.getInt(5),
+                        query.getInt(6),
+                        query.getInt(7),
+                        query.getInt(8),
+                        query.getInt(9),
+                        query.getInt(10),
+                        query.getInt(11)));
+            }
+        }
+        query.close();
+        apartmentsDataBase.close();
     }
     private void showFindHousesWindow() {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
