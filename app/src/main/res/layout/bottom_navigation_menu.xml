@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_favorite"
         android:title="Избранное" />
     <item
-        android:id="@+id/action_mail"
+        android:id="@+id/action_profile"
         android:enabled="true"
         android:icon="@drawable/ic_profile"
         android:title="Профиль" />

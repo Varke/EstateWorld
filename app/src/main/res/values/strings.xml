@@ -4,4 +4,6 @@
     <string name="signin">Уже есть аккаунт</string>
     <string name="signup">Зарегистрироваться</string>
     <string name="find_house">Поиск квартиры</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase db;
     DatabaseReference users;
-    String mailUser, numberUser;
+    String mailUser, numberUser, favoriteApartments, loginUser;
     RelativeLayout root;
 
 
@@ -97,23 +97,30 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase.db", MODE_PRIVATE, null);
-                                usersDataBase.execSQL("CREATE TABLE IF NOT EXISTS users (name TEXT, number TEXT)");
+                                SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase2.db", MODE_PRIVATE, null);
+                                usersDataBase.execSQL("CREATE TABLE IF NOT EXISTS users (login TEXT, mail TEXT, number TEXT, favoriteApartments TEXT)");
                                 Cursor query = usersDataBase.rawQuery("SELECT * FROM users;", null);
                                 if(query.moveToFirst()){
                                     while(query.moveToNext()){
-                                        if (query.getString(0).equals(email.getText().toString())) {
-                                            numberUser = query.getString(1);
-                                            mailUser = query.getString(0);
+                                        Snackbar.make(root, query.getString(1), Snackbar.LENGTH_SHORT).show();
+                                        if (query.getString(1).equals(email.getText().toString())) {
+                                            numberUser = query.getString(2);
+
+                                            loginUser = query.getString(0);
+                                            mailUser = query.getString(1);
+                                            favoriteApartments = query.getString(3);
                                         }
                                     }
                                 }
+                                else mailUser = " NULL ELEMENTOV V DATABSE";
                                 query.close();
                                 usersDataBase.close();
 
                                 Intent nextWindow = new Intent(MainActivity.this, SearchActivity.class);
                                 nextWindow.putExtra("mailUser", mailUser);
+                                nextWindow.putExtra("loginUser", loginUser);
                                 nextWindow.putExtra("numberUser", numberUser);
+                                nextWindow.putExtra("favoriteApartments", favoriteApartments);
                                 startActivity(nextWindow);
 
                                 finish();
@@ -182,9 +189,9 @@ public class MainActivity extends AppCompatActivity {
                                 user.setPassword(password.getText().toString());
                                 user.setNumber(number.getText().toString());
 
-                                SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase.db", MODE_PRIVATE, null);
-                                usersDataBase.execSQL("CREATE TABLE IF NOT EXISTS users (name TEXT, number TEXT)");
-                                usersDataBase.execSQL("INSERT INTO users VALUES ('" + email.getText().toString() +"', '"+ number.getText().toString() + "');");
+                                SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase2.db", MODE_PRIVATE, null);
+                                usersDataBase.execSQL("CREATE TABLE IF NOT EXISTS users (login TEXT, mail TEXT, number TEXT, favoriteApartments TEXT)");
+                                usersDataBase.execSQL("INSERT INTO users VALUES ('" + login.getText().toString() + "', '"+ email.getText().toString() +"', '" + number.getText().toString() + "', '');");
                                 usersDataBase.close();
 
                                 users.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {

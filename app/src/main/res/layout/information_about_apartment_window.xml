@@ -5,6 +5,9 @@
     app:cardElevation="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,9 +78,18 @@
             android:textColor="@color/mainYellowColor"
             android:textSize="30sp"
             android:textStyle="bold">
-
         </TextView>
+        <Button
+            android:id="@+id/add_to_favorite_button"
+            android:layout_width="150sp"
+            android:layout_height="40sp"
+            android:text="В избранное"
+            android:textColor="@color/black"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:background="@drawable/button_animation">
+        </Button>
+
     </LinearLayout>
 
-
+    </ScrollView>
 </androidx.cardview.widget.CardView>
