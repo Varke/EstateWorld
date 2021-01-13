@@ -8,6 +8,7 @@
     tools:context=".SearchActivity">
 
     <LinearLayout
+        android:id="@+id/secondLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -33,11 +34,23 @@
             android:textStyle="bold">
 
         </TextView>
+
         <ListView
             android:id="@+id/list_houses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp" />
-
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_alignBottom="@id/secondLinearLayout"
+        app:itemIconTint="@layout/selector"
+        app:itemTextColor="@layout/selector"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:enabled="true"
+        app:menu="@layout/bottom_navigation_menu"
+        android:layout_marginBottom="0dp"/>
+
 </RelativeLayout>
