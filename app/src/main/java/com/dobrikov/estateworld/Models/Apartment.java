@@ -149,8 +149,8 @@ public class Apartment {
             return "Одна комната";
         }
         if (countRooms > 1 && countRooms < 5)
-            return valueOf(countRooms) + "комнаты";
-        else return valueOf(countRooms) + "комнат";
+            return valueOf(countRooms) + " комнаты";
+        else return valueOf(countRooms) + " комнат";
     }
 
     public String getHouseTypeString() {

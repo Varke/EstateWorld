@@ -47,11 +47,16 @@ public class SearchActivity extends AppCompatActivity {
     AddressContainer addressContainer = new AddressContainer();
     String textToTextViewFilter = "Фильтры поиска: ";
     RelativeLayout root;
+    String mailUser, numberUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        mailUser = getIntent().getStringExtra("mailUser");
+        numberUser = getIntent().getStringExtra("numberUser");
+
+        textToTextViewFilter = "MAIL: " + mailUser + ", TELEPHONE: " + numberUser;
         // создаем адаптер
         fillData();
         boxAdapter = new BoxAdapter(this, products);

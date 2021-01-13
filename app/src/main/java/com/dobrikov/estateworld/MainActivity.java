@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase db;
     DatabaseReference users;
-
+    String mailUser, numberUser;
     RelativeLayout root;
 
 
@@ -95,7 +97,25 @@ public class MainActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                                SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase.db", MODE_PRIVATE, null);
+                                usersDataBase.execSQL("CREATE TABLE IF NOT EXISTS users (name TEXT, number TEXT)");
+                                Cursor query = usersDataBase.rawQuery("SELECT * FROM users;", null);
+                                if(query.moveToFirst()){
+                                    while(query.moveToNext()){
+                                        if (query.getString(0).equals(email.getText().toString())) {
+                                            numberUser = query.getString(1);
+                                            mailUser = query.getString(0);
+                                        }
+                                    }
+                                }
+                                query.close();
+                                usersDataBase.close();
+
+                                Intent nextWindow = new Intent(MainActivity.this, SearchActivity.class);
+                                nextWindow.putExtra("mailUser", mailUser);
+                                nextWindow.putExtra("numberUser", numberUser);
+                                startActivity(nextWindow);
+
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -161,6 +181,11 @@ public class MainActivity extends AppCompatActivity {
                                 user.setMail(email.getText().toString());
                                 user.setPassword(password.getText().toString());
                                 user.setNumber(number.getText().toString());
+
+                                SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase.db", MODE_PRIVATE, null);
+                                usersDataBase.execSQL("CREATE TABLE IF NOT EXISTS users (name TEXT, number TEXT)");
+                                usersDataBase.execSQL("INSERT INTO users VALUES ('" + email.getText().toString() +"', '"+ number.getText().toString() + "');");
+                                usersDataBase.close();
 
                                 users.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
