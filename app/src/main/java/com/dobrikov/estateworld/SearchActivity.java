@@ -41,9 +41,7 @@ import java.util.List;
 import static java.lang.String.valueOf;
 
 public class SearchActivity extends AppCompatActivity {
-    FirebaseAuth auth;
-    FirebaseDatabase db;
-    DatabaseReference users;
+
     ArrayList<Apartment> products = new ArrayList<Apartment>();
     BoxAdapter boxAdapter;
     AddressContainer addressContainer = new AddressContainer();
@@ -120,14 +118,21 @@ public class SearchActivity extends AppCompatActivity {
 
     }
     void fillData() {
-        products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 1, 0, 0));
-        products.add(new Apartment("Панина", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 0, 0, 1));
-        products.add(new Apartment("Союзная", "Ленинский", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 1, 0, 2));
-        products.add(new Apartment("Труфанова", "Брагино", "Москва", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 0, 0, 1));
+        AddressContainer ac = new AddressContainer();
+        String str = ac.getCity()[0 + (int)(Math.random() * 4)];
+        for (int i = 0; i < 10; i++)
+            products.add(new Apartment(ac.getStreets()[0 + (int)(Math.random() * 12)],
+                    ac.getDistricts()[0 + (int)(Math.random() * 5)],
+                    ac.getCity()[0 + (int)(Math.random() * 4)],
+                    ac.getTitles()[0 + (int)(Math.random() * 9)],
+                    valueOf(890000000 + (int)(Math.random()*819999999)),
+                    1 + (int)(Math.random() * 5),
+                    30 + (int)(Math.random() * 160),
+                    600000 + (int)(Math.random() * 10000000),
+                    1 + (int)(Math.random() * 9),
+                    0 + (int)(Math.random() * 1),
+                    0 + (int)(Math.random() * 15),
+                    i));
     }
     private void showFindHousesWindow() {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -243,7 +248,6 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                 }
-                ArrayList<Integer> tempint = new ArrayList<Integer>();
                 for (int i = productsWithFilter.size()-1; i >= 0; i--) {
                     if (streetStr.equals("")){
                         if (districtStr.equals("")) {
@@ -259,7 +263,7 @@ public class SearchActivity extends AppCompatActivity {
                     else if (!(productsWithFilter.get(i).getStreet().equalsIgnoreCase(streetStr))||(district == true && productsWithFilter.get(i).getDistrict().equalsIgnoreCase(districtStr) == false)||(city == true && productsWithFilter.get(i).getCity().equalsIgnoreCase(cityStr) == false))
                         productsWithFilter.remove(i);
                 }
-
+        textToTextViewFilter = "Применённые фильтры: ";
         if (city)
             textToTextViewFilter = textToTextViewFilter.concat("г." + cityStr.toUpperCase() +", ");
         if (district)

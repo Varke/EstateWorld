@@ -44,8 +44,8 @@
             android:id="@+id/roomSeekbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            app:absoluteMaxValue="0"
-            app:absoluteMinValue="100"
+            app:absoluteMaxValue="1"
+            app:absoluteMinValue="5"
             android:layout_marginBottom="30dp"/>
 
         <TextView
