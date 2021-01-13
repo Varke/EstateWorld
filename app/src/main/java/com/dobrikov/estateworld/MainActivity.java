@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         final MaterialEditText email = signup_window.findViewById(R.id.mailField);
         final MaterialEditText login = signup_window.findViewById(R.id.loginField);
         final MaterialEditText password = signup_window.findViewById(R.id.passwordField);
+        final MaterialEditText number = signup_window.findViewById(R.id.numberField);
 
         dialog.setNegativeButton("Отменить", new DialogInterface.OnClickListener() {
             @Override
@@ -141,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(root, "Введите имя", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                if (TextUtils.isEmpty(number.getText().toString())) {
+                    Snackbar.make(root, "Введите номер телефона", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
                 if (password.getText().toString().length() < 5) {
                     Snackbar.make(root, "Пароль должен содержать от 6 символов", Snackbar.LENGTH_SHORT).show();
                     return;
@@ -155,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                                 user.setLogin(login.getText().toString());
                                 user.setMail(email.getText().toString());
                                 user.setPassword(password.getText().toString());
+                                user.setNumber(number.getText().toString());
 
                                 users.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

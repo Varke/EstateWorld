@@ -57,6 +57,22 @@
             app:met_errorColor="#ddaa00">
 
         </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberField"
+            android:hint="Номер телефона"
+            android:inputType="number"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
     </LinearLayout>
 
 

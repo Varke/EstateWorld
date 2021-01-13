@@ -1,16 +1,22 @@
 
 package com.dobrikov.estateworld;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,7 +25,13 @@ import android.widget.Toast;
 import com.dobrikov.estateworld.Models.AddressContainer;
 import com.dobrikov.estateworld.Models.Apartment;
 import com.dobrikov.estateworld.Models.BoxAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
@@ -29,6 +41,9 @@ import java.util.List;
 import static java.lang.String.valueOf;
 
 public class SearchActivity extends AppCompatActivity {
+    FirebaseAuth auth;
+    FirebaseDatabase db;
+    DatabaseReference users;
     ArrayList<Apartment> products = new ArrayList<Apartment>();
     BoxAdapter boxAdapter;
     AddressContainer addressContainer = new AddressContainer();
@@ -46,6 +61,49 @@ public class SearchActivity extends AppCompatActivity {
         // настраиваем список
         ListView lvMain = (ListView) findViewById(R.id.list_houses);
         lvMain.setAdapter(boxAdapter);
+        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
+            {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(SearchActivity.this);
+                dialog.setTitle("Просмотр квартиры.");
+                dialog.setMessage("Будьте внимательны! Никогда не отправляйте деньги предоплатой!");
+
+                LayoutInflater inflater = LayoutInflater.from(SearchActivity.this);
+                View information_about_apartment = inflater.inflate(R.layout.information_about_apartment_window, null);
+                dialog.setView(information_about_apartment);
+
+                ImageView imageApartment = (ImageView)information_about_apartment.findViewById(R.id.imageApartment);
+                TextView titlePage = (TextView)information_about_apartment.findViewById(R.id.apartmentTitle);
+                TextView apartmentDescription = (TextView)information_about_apartment.findViewById(R.id.apartmentDescription);
+                TextView apartmentCountRoomsAndMeters = (TextView)information_about_apartment.findViewById(R.id.apartmentCountRoomsAndMeters);
+                TextView descriptionHouse = (TextView)information_about_apartment.findViewById(R.id.descriptionHouse);
+                TextView apartmentCost = (TextView)information_about_apartment.findViewById(R.id.apartmentCost);
+
+                Apartment apartment = (Apartment)lvMain.getAdapter().getItem(position);
+                titlePage.setText(apartment.getTitle());
+                imageApartment.setImageResource(apartment.getImageId(SearchActivity.this, apartment.getId()));
+                apartmentDescription.setText("г." + apartment.getCity() + ", р-н." + apartment.getDistrict() + ", ул." + apartment.getStreet());
+                apartmentCountRoomsAndMeters.setText(apartment.getRoomsString() + ", " + apartment.getSize() + "кв.м.");
+                descriptionHouse.setText(apartment.getLevel() + " этаж. " + apartment.getHouseTypeString());
+                apartmentCost.setText(apartment.getCost() + "₽");
+
+                dialog.setPositiveButton("Связаться с продавцом", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    Snackbar.make(root, "Телефон продавца: " + apartment.getOwnerEmail(), Snackbar.LENGTH_LONG).show();
+                }
+            }).setNegativeButton("Отменить", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    dialogInterface.dismiss();
+                }
+            });
+
+                dialog.show();
+            }
+        });
 
     // String street, String district, String city, String title, String ownerEmail, int countRooms, int size, int cost, int level, int typeHouse, int imgid, int id
     // генерируем данные для адаптера
@@ -65,11 +123,11 @@ public class SearchActivity extends AppCompatActivity {
         products.add(new Apartment("Труфанова", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
                 , 1, 31, 1100000, 5, 1, 0, 0));
         products.add(new Apartment("Панина", "Брагино", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 0, 0, 0));
+                , 1, 31, 1100000, 5, 0, 0, 1));
         products.add(new Apartment("Союзная", "Ленинский", "Ярославль", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 1, 0, 0));
+                , 1, 31, 1100000, 5, 1, 0, 2));
         products.add(new Apartment("Труфанова", "Брагино", "Москва", "Скромная квартира в общежитии.", "testaccout@gmail.ru"
-                , 1, 31, 1100000, 5, 0, 0, 0));
+                , 1, 31, 1100000, 5, 0, 0, 1));
     }
     private void showFindHousesWindow() {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -110,16 +168,12 @@ public class SearchActivity extends AppCompatActivity {
                     tv.setTextSize(15);
 
                     lvMain.setAdapter(new BoxAdapter(SearchActivity.this, test));
-                    lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View view,
-                                                int position, long id) {
 
-                        }
-                    });
                 }
             });
             dialog.show();
     }
+
 
     private ArrayList<Apartment> applyFilters(String address, int countMinRooms, int countMaxRooms
             , int countMinSize, int countMaxSize, int minLevel, int maxLevel, int minCost, int maxCost, boolean brick, boolean panel, View find_houses_window) {

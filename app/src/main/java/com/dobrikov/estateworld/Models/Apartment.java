@@ -1,5 +1,7 @@
 package com.dobrikov.estateworld.Models;
 
+import android.app.Activity;
+import android.content.Context;
 import android.media.Image;
 import android.widget.ImageView;
 
@@ -17,7 +19,8 @@ public class Apartment {
      */
 
     private String street, district, city, title, ownerEmail;
-    private int countRooms, size, cost, level, typeHouse, imgid, id;
+    private int countRooms, size, cost, level, typeHouse, imgid;
+    private int id;
 
     public Apartment() {    }
 
@@ -137,6 +140,10 @@ public class Apartment {
         return R.drawable.house0;
     }
 
+    public static int getImageId(Context context, int idimage) {
+        return context.getResources().getIdentifier("drawable/house" + valueOf(idimage), null, context.getPackageName());
+    }
+
     public String getRoomsString() {
         if (countRooms == 1) {
             return "Одна комната";
@@ -144,5 +151,11 @@ public class Apartment {
         if (countRooms > 1 && countRooms < 5)
             return valueOf(countRooms) + "комнаты";
         else return valueOf(countRooms) + "комнат";
+    }
+
+    public String getHouseTypeString() {
+        if (typeHouse == 1)
+            return "Кирпичный дом.";
+            else return "Панельный дом";
     }
 }

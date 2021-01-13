@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dobrikov.estateworld.R;
+import com.dobrikov.estateworld.SearchActivity;
 
 public class BoxAdapter extends BaseAdapter {
     Context ctx;
@@ -61,7 +62,7 @@ public class BoxAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.apartmentCost)).setText(p.getCost() + "₽");
         ((TextView) view.findViewById(R.id.apartmentCountRoomsAndMeters)).setText(p.getRoomsString() + ", " + p.getSize() + "кв.м.");
         ((TextView) view.findViewById(R.id.apartmentDescription)).setText("г." + p.getCity() + ", р-н." + p.getDistrict() + ", ул." + p.getStreet());
-        ((ImageView) view.findViewById(R.id.apartmentImage)).setImageResource(p.getImage());
+        ((ImageView) view.findViewById(R.id.apartmentImage)).setImageResource(p.getImageId(ctx, p.getId()));
 
         return view;
     }
