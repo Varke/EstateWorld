@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleField"
+            android:hint="Заголовок объявления"
+            android:inputType="text"
+            android:text=""
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/streetField"
+            android:hint="Улица"
+            android:inputType="text"
+            android:text=""
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/districtField"
+            android:hint="Район"
+            android:inputType="text"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cityField"
+            android:hint="Город"
+            android:inputType="text"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/roomsField"
+            android:hint="Количество комнат"
+            android:inputType="number"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sizeField"
+            android:hint="Площадь (кв.м.)"
+            android:inputType="number"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/levelField"
+            android:hint="Этаж"
+            android:inputType="number"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/costField"
+            android:hint="Стоимость"
+            android:inputType="number"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/numberField"
+            android:hint="Номер телефона"
+            android:inputType="number"
+            android:text=""
+
+            android:textSize="20sp"
+
+            app:met_floatingLabel="highlight"
+            app:met_baseColor="@color/white"
+            app:met_primaryColor="@color/mainYellowColor"
+            app:met_errorColor="#ddaa00">
+
+        </com.rengwuxian.materialedittext.MaterialEditText>
+        <CheckBox
+            android:id="@+id/brickCheckBoxS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:text="Кирпичный дом"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/panelCheckBoxS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:text="Панельный дом"
+            android:textSize="20sp" />
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/entersell"
+            android:layout_height="40sp"
+            android:layout_marginTop="-40sp"
+            android:text="Продать!"
+            android:background="@drawable/button_animation"
+            android:textColor="@color/black">
+
+        </Button>
+    </LinearLayout>
+
+    </ScrollView>
+</androidx.cardview.widget.CardView>

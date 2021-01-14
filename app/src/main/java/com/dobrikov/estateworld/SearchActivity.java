@@ -60,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         // Получение данных из предыдущей формы
         mailUser = getIntent().getStringExtra("mailUser");
         numberUser = getIntent().getStringExtra("numberUser");
@@ -72,7 +73,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_favorites:
+                    case R.id.action_favorite:
                         Intent nextWindow = new Intent(SearchActivity.this, FavoritesActivity.class);
                         nextWindow.putExtra("mailUser", mailUser);
                         nextWindow.putExtra("loginUser", loginUser);
@@ -82,6 +83,13 @@ public class SearchActivity extends AppCompatActivity {
                         finish();
                     case R.id.action_all_apartments:
                     case R.id.action_profile:
+                        Intent profileWindow = new Intent(SearchActivity.this, ProfileActivity.class);
+                        profileWindow.putExtra("mailUser", mailUser);
+                        profileWindow.putExtra("loginUser", loginUser);
+                        profileWindow.putExtra("numberUser", numberUser);
+                        profileWindow.putExtra("favoriteApartments", favoriteApartments);
+                        startActivity(profileWindow);
+                        finish();
                 }
                 return true;
             }
@@ -164,8 +172,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void addApartmentInFavorite(Apartment apartment) {
-        String willAdd = valueOf(apartment.getId()) + " ";
-        Snackbar.make(root, "DOBAVILI " + willAdd, Snackbar.LENGTH_LONG).show();
+        String willAdd = favoriteApartments.concat(valueOf(apartment.getId()) + " ");
         SQLiteDatabase usersDataBase = getBaseContext().openOrCreateDatabase("usersDataBase2.db", MODE_PRIVATE, null);
         usersDataBase.execSQL("UPDATE users SET favoriteApartments = '" + willAdd + "' WHERE mail = '" + mailUser + "'");
         usersDataBase.close();
@@ -174,28 +181,17 @@ public class SearchActivity extends AppCompatActivity {
 
     void fillData() {
         AddressContainer ac = new AddressContainer();
-        SQLiteDatabase apartmentsDataBase = getBaseContext().openOrCreateDatabase("apartmentsDataBaseFinal.db", MODE_PRIVATE, null);
+        SQLiteDatabase apartmentsDataBase = getBaseContext().openOrCreateDatabase("apartmentsDataBaseRelease.db", MODE_PRIVATE, null);
         apartmentsDataBase.execSQL("CREATE TABLE IF NOT EXISTS apartments (street TEXT, district TEXT, city TEXT, title TEXT, ownerNumber INTEGER, countRooms INTEGER," +
                 " size INTEGER, cost INTEGER, level INTEGER, typeHouse INTEGER, imgid INTEGER, id INTEGER)");
 
 
-      /* for (int i = 0; i < 20; i++)
+     /* НАЧАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ РАНДОМНЫМИ ЗНАЧЕНИЯМИ.
+     for (int i = 0; i < 15; i++)
             apartmentsDataBase.execSQL("INSERT INTO apartments VALUES ('" + ac.getStreets()[0 + (int)(Math.random() * 12)] +"', '"+ ac.getDistricts()[0 + (int)(Math.random() * 5)] + "', '" + ac.getCity()[0 + (int)(Math.random() * 4)] + "', '" + ac.getTitles()[0 + (int)(Math.random() * 9)] + "', '"
                     + valueOf(890000000 + (int)(Math.random()*819999999)) + "', '" + (1 + (int)(Math.random() * 5)) + "', '"
                     + (30 + (int)(Math.random() * 160)) + "', '" + (600000 + (int)(Math.random() * 10000000)) + "', '" + (1 + (int)(Math.random() * 9)) + "', '" + (0 + (int)(Math.random() * 1)) + "', '" + (0 + (int)(Math.random() * 15)) +"', '" + i + "');");
 */
-           /* products.add(new Apartment(ac.getStreets()[0 + (int)(Math.random() * 12)],
-                    ac.getDistricts()[0 + (int)(Math.random() * 5)],
-                    ac.getCity()[0 + (int)(Math.random() * 4)],
-                    ac.getTitles()[0 + (int)(Math.random() * 9)],
-                    valueOf(890000000 + (int)(Math.random()*819999999)),
-                    1 + (int)(Math.random() * 5),
-                    30 + (int)(Math.random() * 160),
-                    600000 + (int)(Math.random() * 10000000),
-                    1 + (int)(Math.random() * 9),
-                    0 + (int)(Math.random() * 1),
-                    0 + (int)(Math.random() * 15),
-                    i)); */
 
         Cursor query = apartmentsDataBase.rawQuery("SELECT * FROM apartments;", null);
         if(query.moveToFirst()){

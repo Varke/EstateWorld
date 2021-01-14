@@ -31,7 +31,7 @@
                 android:fontFamily="@font/mainfontmontserrat"
                 android:text=""
                 android:textColor="@color/mainYellowColor"
-                android:textSize="30sp"
+                android:textSize="0sp"
                 android:textStyle="bold">
 
             </TextView>

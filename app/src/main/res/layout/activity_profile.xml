@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity"
+    android:id="@+id/root_profile_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/loginLabel"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:textColor="@color/mainYellowColor"
+            android:textStyle="bold"
+            android:text="Alexey Dobrikov"
+            android:textSize="30sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/mailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="alexeyd@mail.ru"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:textSize="20sp"
+            android:layout_marginTop="-10sp">
+        </TextView>
+        <TextView
+            android:id="@+id/numberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfontmontserrat"
+            android:text="+7-962-211-79-30"
+            android:textSize="25sp"
+            style="bold"
+            android:layout_marginTop="-5sp">
+        </TextView>
+        <Button
+            android:id="@+id/sellApartmentButton"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30sp"
+            android:layout_height="60sp"
+            android:background="@drawable/button_animation"
+            android:textColor="@color/black"
+            android:text="Продать квартиру">
+
+        </Button>
+    </LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@layout/selector"
+        app:itemTextColor="@layout/selector"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:enabled="true"
+        app:menu="@layout/bottom_navigation_menu"
+        android:layout_marginBottom="0dp"/>
+</RelativeLayout>

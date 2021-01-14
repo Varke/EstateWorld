@@ -46,21 +46,28 @@ public class FavoritesActivity extends AppCompatActivity {
         root = findViewById(R.id.root_favoritesactivity);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.action_favorites);
+        bottomNavigationView.setSelectedItemId(R.id.action_favorite);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_favorites:
                     case R.id.action_all_apartments:
-                        Intent nextWindow = new Intent(FavoritesActivity.this, SearchActivity.class);
-                        nextWindow.putExtra("mailUser", userMail);
-                        nextWindow.putExtra("loginUser", loginUser);
-                        nextWindow.putExtra("numberUser", numberUser);
-                        nextWindow.putExtra("favoriteApartments", favoriteApartments);
-                        startActivity(nextWindow);
+                        Intent searchWindow = new Intent(FavoritesActivity.this, SearchActivity.class);
+                        searchWindow.putExtra("mailUser", userMail);
+                        searchWindow.putExtra("loginUser", loginUser);
+                        searchWindow.putExtra("numberUser", numberUser);
+                        searchWindow.putExtra("favoriteApartments", favoriteApartments);
+                        startActivity(searchWindow);
                         finish();
+                    case R.id.action_favorite:
                     case R.id.action_profile:
+                        Intent profileWindow = new Intent(FavoritesActivity.this, ProfileActivity.class);
+                        profileWindow.putExtra("mailUser", userMail);
+                        profileWindow.putExtra("loginUser", loginUser);
+                        profileWindow.putExtra("numberUser", numberUser);
+                        profileWindow.putExtra("favoriteApartments", favoriteApartments);
+                        startActivity(profileWindow);
+                        finish();
                 }
                 return true;
             }
@@ -129,7 +136,7 @@ public class FavoritesActivity extends AppCompatActivity {
                 favoriteStr = queryU.getString(3);
         }
 
-        SQLiteDatabase apartmentsDataBase = getBaseContext().openOrCreateDatabase("apartmentsDataBaseFinal.db", MODE_PRIVATE, null);
+        SQLiteDatabase apartmentsDataBase = getBaseContext().openOrCreateDatabase("apartmentsDataBaseRelease.db", MODE_PRIVATE, null);
         apartmentsDataBase.execSQL("CREATE TABLE IF NOT EXISTS apartments (street TEXT, district TEXT, city TEXT, title TEXT, ownerNumber INTEGER, countRooms INTEGER," +
                 " size INTEGER, cost INTEGER, level INTEGER, typeHouse INTEGER, imgid INTEGER, id INTEGER)");
         Cursor query = apartmentsDataBase.rawQuery("SELECT * FROM apartments;", null);
